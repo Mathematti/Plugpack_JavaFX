@@ -43,11 +43,11 @@ public class MainMenu extends Application {
 
         Label main = new Label("Plugpack by Mathematti");
         main.setTextFill(Color.BLUE);
-        Label servers = new Label("You currently have " + AddServer.servers.length + " servers set up.");
+        Label servers = new Label("You currently have " + ModifyServer.servers.length + " servers set up.");
         Button modify = new Button("Modify servers");
         modify.setOnAction(actionEvent -> ModifyServer.chooseServerGUI(stage));
         Button addServer = new Button("Add server");
-        addServer.setOnAction(actionEvent -> AddServer.addServerGUI(stage, ""));
+        addServer.setOnAction(actionEvent -> ModifyServer.addServerGUI(stage, ""));
         Button generateScript = new Button("Generate script");
 
         hBox.getChildren().addAll(modify, addServer);
