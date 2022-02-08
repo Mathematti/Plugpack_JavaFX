@@ -1,5 +1,7 @@
 package com.mathematti.plugpack;
 
+import javafx.application.Application;
+
 /**
  * Main class for Plugpack
  * @author Mathematti
@@ -10,6 +12,6 @@ public class Plugpack {
      * @param args args
      */
     public static void main(String[] args) {
-        MainMenu.launch(args);
+        Application.launch(MainMenu.class, args);
     }
 }
