@@ -3,8 +3,8 @@ package com.mathematti.plugpack.plugin;
 public class BukkitPlugin extends Plugin {
     String downloadLink;
 
-    public BukkitPlugin(String name, String link) {
-        super(name);
+    public BukkitPlugin(String name, String type, String link) {
+        super(name, type);
 
         if (link.contains("files/latest")) {
             downloadLink = link;

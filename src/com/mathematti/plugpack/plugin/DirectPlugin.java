@@ -2,8 +2,9 @@ package com.mathematti.plugpack.plugin;
 
 public class DirectPlugin extends Plugin {
     String downloadLink;
-    public DirectPlugin(String name, String downloadLink) {
-        super(name);
+
+    public DirectPlugin(String name, String type, String downloadLink) {
+        super(name, type);
         this.downloadLink = downloadLink;
     }
 

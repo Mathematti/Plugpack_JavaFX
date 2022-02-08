@@ -1,8 +1,8 @@
 package com.mathematti.plugpack.plugin;
 
 public class GithubPlugin extends Plugin {
-    public GithubPlugin(String name) {
-        super(name);
+    public GithubPlugin(String name, String type) {
+        super(name, type);
     }
 
     @Override

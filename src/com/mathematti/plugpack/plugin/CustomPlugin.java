@@ -1,10 +1,10 @@
 package com.mathematti.plugpack.plugin;
 
 public class CustomPlugin extends Plugin {
-    private String downloadCommand;
+    final private String downloadCommand;
 
-    public CustomPlugin(String name, String command) {
-        super(name);
+    public CustomPlugin(String name, String type, String command) {
+        super(name, type);
         downloadCommand = command;
     }
 

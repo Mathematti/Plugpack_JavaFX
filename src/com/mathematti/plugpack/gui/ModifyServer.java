@@ -146,7 +146,17 @@ public class ModifyServer {
             chooseServerGUI(stage);
         });
 
+        int serverSaveLoc = 0;
+        for (int i = 0; i < servers.length; i++) {
+            if (servers[i].getName().equals(serverName)) {
+                serverSaveLoc = i;
+                break;
+            }
+        }
+
         Button modifyPlugins = new Button("Modify plugins");
+        int finalServerSaveLoc = serverSaveLoc;
+        modifyPlugins.setOnAction(actionEvent -> ModifyPlugins.choosePluginGUI(stage, servers[finalServerSaveLoc]));
 
         Button cancel = new Button("Cancel");
         cancel.setOnAction(actionEvent -> chooseServerGUI(stage));

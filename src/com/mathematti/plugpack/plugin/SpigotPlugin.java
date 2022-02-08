@@ -1,15 +1,21 @@
 package com.mathematti.plugpack.plugin;
 
 public class SpigotPlugin extends Plugin {
-    private int id;
+    final private int id;
+    final private String link;
 
-    public SpigotPlugin(String name, String link) {
-        super(name);
-        this.id = Integer.parseInt(link.substring(link.lastIndexOf('.'), link.length() - 1));
+    public SpigotPlugin(String name, String type, String link) {
+        super(name, type);
+        this.id = Integer.parseInt(link.substring(link.lastIndexOf('.') + 1, link.length() - 1));
+        this.link = link;
     }
 
     @Override
     public String download() {
-        return id + "";
+        return link;
+    }
+
+    public int getId() {
+        return id;
     }
 }
