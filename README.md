@@ -1,3 +1,5 @@
+# *This application is still WIP and not yet usable*
+
 # Plugpack
 This JavaFX application allows you to easily create Plugin-packs to use as a "Modpack" with [itzg's minecraft server docker container](https://github.com/itzg/docker-minecraft-server).
 
