@@ -1,5 +1,6 @@
 package com.mathematti.plugpack.gui;
 
+import com.mathematti.plugpack.Server;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -43,7 +44,7 @@ public class MainMenu extends Application {
 
         Label main = new Label("Plugpack by Mathematti");
         main.setTextFill(Color.BLUE);
-        Label servers = new Label("You currently have " + ModifyServer.servers.length + " servers set up.");
+        Label servers = new Label("You currently have " + Server.servers.length + " servers set up.");
         Button modify = new Button("Modify servers");
         modify.setOnAction(actionEvent -> ModifyServer.chooseServerGUI(stage));
         Button addServer = new Button("Add server");

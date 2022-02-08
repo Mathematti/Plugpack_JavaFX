@@ -15,8 +15,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.mathematti.plugpack.Server.servers;
+
 public class ModifyServer {
-    public static Server[] servers = new Server[0];
 
     public static void addServerGUI(Stage stage, String error) {
         stage.setTitle("Plugpack - Add new server");
