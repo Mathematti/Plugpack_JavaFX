@@ -1,10 +1,10 @@
-package com.mathematti.plugpack;
+package com.mathematti.plugpack.plugin;
 
 public class BukkitPlugin extends Plugin {
     String downloadLink;
 
-    public BukkitPlugin(String name, String type, String link) {
-        super(name, type);
+    public BukkitPlugin(String name, String link) {
+        super(name);
 
         if (link.contains("files/latest")) {
             downloadLink = link;
@@ -13,5 +13,10 @@ public class BukkitPlugin extends Plugin {
         } else {
             downloadLink = link + "/files/latest";
         }
+    }
+
+    @Override
+    public String download() {
+        return downloadLink;
     }
 }
