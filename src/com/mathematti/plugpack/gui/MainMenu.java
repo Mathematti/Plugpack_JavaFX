@@ -47,11 +47,9 @@ public class MainMenu extends Application {
         Label servers = new Label("You currently have " + Server.servers.length + " servers set up.");
         Button modify = new Button("Modify servers");
         modify.setOnAction(actionEvent -> ModifyServer.chooseServerGUI(stage));
-        Button addServer = new Button("Add server");
-        addServer.setOnAction(actionEvent -> ModifyServer.addServerGUI(stage, ""));
         Button generateScript = new Button("Generate script");
 
-        hBox.getChildren().addAll(modify, addServer);
+        hBox.getChildren().addAll(modify);
 
         vBox.getChildren().addAll(main, servers, hBox, generateScript);
     }

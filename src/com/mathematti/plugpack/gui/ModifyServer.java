@@ -69,7 +69,7 @@ public class ModifyServer {
         if (!error) {
             servers = Arrays.copyOf(servers, servers.length + 1);
             servers[servers.length - 1] = new Server(name);
-            MainMenu.showMainGUI(stage);
+            modifyServerGUI(stage, name);
         }
     }
 
@@ -92,6 +92,8 @@ public class ModifyServer {
         Label top = new Label("Which server do you want to modify?");
         Button cancel = new Button("Cancel");
         cancel.setOnAction(actionEvent -> MainMenu.showMainGUI(stage));
+        Button addServer = new Button("Add server");
+        addServer.setOnAction(actionEvent -> addServerGUI(stage, ""));
 
         List<Button> buttonList = new ArrayList<>();
 
@@ -104,8 +106,12 @@ public class ModifyServer {
             buttonList.get(i).setOnAction(actionEvent -> modifyServerGUI(stage, buttonList.get(finalI).getText()));
         }
 
+        HBox hBox = new HBox();
+        hBox.setSpacing(padding);
+
+        hBox.getChildren().addAll(addServer, cancel);
         flowPane.getChildren().addAll(buttonList);
-        vBox.getChildren().addAll(top, flowPane, cancel);
+        vBox.getChildren().addAll(top, flowPane, hBox);
     }
 
     public static void modifyServerGUI(Stage stage, String serverName) {
@@ -116,13 +122,37 @@ public class ModifyServer {
         vBox.setPadding(new Insets(padding));
         vBox.setSpacing(padding);
 
+        HBox hBox = new HBox();
+        hBox.setSpacing(padding);
+
         int width = 350;
         final int height = 200;
         stage.setScene(new Scene(vBox, width, height));
 
-        Button cancel = new Button("Cancel");
-        cancel.setOnAction(actionEvent -> MainMenu.showMainGUI(stage));
+        Label top = new Label("Modify " + serverName + ":");
 
-        vBox.getChildren().addAll(cancel);
+        Button deleteServer = new Button("Delete");
+        deleteServer.setOnAction(actionEvent -> {
+            Server[] temp = servers.clone();
+            servers = new Server[temp.length - 1];
+
+            int placeAt = 0;
+            for (Server server : temp) {
+                if (!server.getName().equals(serverName)) {
+                    servers[placeAt] = server;
+                    placeAt++;
+                }
+            }
+            chooseServerGUI(stage);
+        });
+
+        Button modifyPlugins = new Button("Modify plugins");
+
+        Button cancel = new Button("Cancel");
+        cancel.setOnAction(actionEvent -> chooseServerGUI(stage));
+
+        hBox.getChildren().addAll(deleteServer, modifyPlugins);
+
+        vBox.getChildren().addAll(top, hBox, cancel);
     }
 }
