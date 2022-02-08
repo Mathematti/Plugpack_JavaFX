@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -17,6 +18,15 @@ import javafx.stage.Stage;
 public class MainMenu extends Application {
     @Override
     public void start(Stage stage) {
+        final int width = 350;
+        final int height = 200;
+        stage.setScene(new Scene(new Pane(), width, height));
+
+        stage.show();
+        showMainGUI(stage);
+    }
+
+    public static void showMainGUI(Stage stage) {
         stage.setTitle("Plugpack");
 
         final int padding = 10;
@@ -33,15 +43,14 @@ public class MainMenu extends Application {
 
         Label main = new Label("Plugpack by Mathematti");
         main.setTextFill(Color.BLUE);
-        Label servers = new Label("You currently have " + 0 + " servers set up.");
+        Label servers = new Label("You currently have " + AddServer.servers.length + " servers set up.");
         Button modify = new Button("Modify servers");
         Button addServer = new Button("Add server");
+        addServer.setOnAction(actionEvent -> AddServer.addServerGUI(stage, ""));
         Button generateScript = new Button("Generate script");
 
         hBox.getChildren().addAll(modify, addServer);
 
         vBox.getChildren().addAll(main, servers, hBox, generateScript);
-
-        stage.show();
     }
 }

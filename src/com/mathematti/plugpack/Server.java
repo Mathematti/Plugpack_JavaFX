@@ -8,11 +8,15 @@ import com.mathematti.plugpack.plugin.SpigotPlugin;
 import java.util.Arrays;
 
 public class Server {
-    private String serverName;
+    final private String serverName;
     private Plugin[] plugins = new Plugin[0];
 
     public Server(String name) {
         serverName = name;
+    }
+
+    public String getName() {
+        return serverName;
     }
 
     public void addPlugin(String name, String type, String link) {
