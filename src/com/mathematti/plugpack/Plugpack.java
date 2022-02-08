@@ -1,5 +1,6 @@
 package com.mathematti.plugpack;
 
+import com.mathematti.plugpack.gui.MainMenu;
 import javafx.application.Application;
 
 /**

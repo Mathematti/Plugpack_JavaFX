@@ -1,4 +1,4 @@
-package com.mathematti.plugpack;
+package com.mathematti.plugpack.gui;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
