@@ -45,6 +45,7 @@ public class MainMenu extends Application {
         main.setTextFill(Color.BLUE);
         Label servers = new Label("You currently have " + AddServer.servers.length + " servers set up.");
         Button modify = new Button("Modify servers");
+        modify.setOnAction(actionEvent -> ModifyServer.chooseServerGUI(stage));
         Button addServer = new Button("Add server");
         addServer.setOnAction(actionEvent -> AddServer.addServerGUI(stage, ""));
         Button generateScript = new Button("Generate script");
