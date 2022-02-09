@@ -48,6 +48,7 @@ public class MainMenu extends Application {
         Button modify = new Button("Modify servers");
         modify.setOnAction(actionEvent -> ModifyServer.chooseServerGUI(stage));
         Button generateScript = new Button("Generate script");
+        generateScript.setOnAction(actionEvent -> GenerateScript.generateScriptGUI(stage));
 
         hBox.getChildren().addAll(modify);
 
