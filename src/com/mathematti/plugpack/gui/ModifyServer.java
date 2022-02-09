@@ -40,7 +40,7 @@ public class ModifyServer {
 
         HBox hBox = new HBox();
         hBox.setSpacing(padding);
-        hBox.getChildren().addAll(confirm, cancel);
+        hBox.getChildren().addAll(cancel, confirm);
 
         if (error.equals("exists")) {
             Label errorLabel = new Label("Server already exists!");
@@ -109,7 +109,7 @@ public class ModifyServer {
         HBox hBox = new HBox();
         hBox.setSpacing(padding);
 
-        hBox.getChildren().addAll(addServer, cancel);
+        hBox.getChildren().addAll(cancel, addServer);
         flowPane.getChildren().addAll(buttonList);
         vBox.getChildren().addAll(top, flowPane, hBox);
     }
@@ -161,8 +161,8 @@ public class ModifyServer {
         Button cancel = new Button("Cancel");
         cancel.setOnAction(actionEvent -> chooseServerGUI(stage));
 
-        hBox.getChildren().addAll(deleteServer, modifyPlugins);
+        hBox.getChildren().addAll(cancel, modifyPlugins, deleteServer);
 
-        vBox.getChildren().addAll(top, hBox, cancel);
+        vBox.getChildren().addAll(top, hBox);
     }
 }

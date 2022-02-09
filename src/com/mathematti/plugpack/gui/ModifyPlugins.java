@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.mathematti.plugpack.Server.servers;
-
 public class ModifyPlugins {
     public static void choosePluginGUI(Stage stage, Server server) {
         stage.setTitle("Plugpack - Modify plugins for " + server.getName());
@@ -59,7 +57,7 @@ public class ModifyPlugins {
         HBox hBox = new HBox();
         hBox.setSpacing(padding);
 
-        hBox.getChildren().addAll(addPlugin, cancel);
+        hBox.getChildren().addAll(cancel, addPlugin);
         flowPane.getChildren().addAll(buttonList);
         vBox.getChildren().addAll(top, flowPane, hBox);
     }
