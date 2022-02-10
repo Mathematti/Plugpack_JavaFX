@@ -86,7 +86,7 @@ public class GenerateScript {
             }
 
             pluginServers[i] = "docker run -d --rm"
-                    + " $PWD/Plugpack/" + Server.servers[i].getName() + ":/data"
+                    + " -v $PWD/Plugpack/" + Server.servers[i].getName() + ":/data"
                     + " -e TYPE=PAPER"
                     + " -e EULA=true"
                     + " -e SPIGET_RESOURCES=" + spigotIDs
@@ -98,6 +98,17 @@ public class GenerateScript {
 
         for (String pluginServer : pluginServers) {
             output.append(pluginServer).append("\n");
+        }
+
+        for (Server server : Server.servers) {
+            for (Plugin plugin : server.plugins) {
+                if (plugin instanceof SpigotPlugin) {
+                    output.append("mv ./Plugpack/").append(server.getName()).append("/plugins/")
+                            .append(((SpigotPlugin) plugin).getId()).append(".jar")
+                            .append(" ./Plugpack/plugins/").append(server.getName())
+                            .append(plugin.getName()).append(".jar\n");
+                }
+            }
         }
 
         return output.toString();
