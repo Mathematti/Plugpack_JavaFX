@@ -67,8 +67,7 @@ public class ModifyServer {
             }
         }
         if (!error) {
-            servers = Arrays.copyOf(servers, servers.length + 1);
-            servers[servers.length - 1] = new Server(name);
+            Server.addServer(name);
             modifyServerGUI(stage, name);
         }
     }

@@ -49,9 +49,11 @@ public class MainMenu extends Application {
         modify.setOnAction(actionEvent -> ModifyServer.chooseServerGUI(stage));
         Button generateScript = new Button("Generate script");
         generateScript.setOnAction(actionEvent -> GenerateScript.generateScriptGUI(stage));
+        Button importScript = new Button("Import script");
+        importScript.setOnAction(actionEvent -> ImportScript.importScriptGUI(stage));
 
-        hBox.getChildren().addAll(modify);
+        hBox.getChildren().addAll(generateScript, importScript);
 
-        vBox.getChildren().addAll(main, servers, hBox, generateScript);
+        vBox.getChildren().addAll(main, servers, modify, hBox);
     }
 }

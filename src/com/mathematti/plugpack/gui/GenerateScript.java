@@ -2,6 +2,7 @@ package com.mathematti.plugpack.gui;
 
 import com.mathematti.plugpack.Server;
 import com.mathematti.plugpack.plugin.BukkitPlugin;
+import com.mathematti.plugpack.plugin.DirectPlugin;
 import com.mathematti.plugpack.plugin.Plugin;
 import com.mathematti.plugpack.plugin.SpigotPlugin;
 import javafx.geometry.Insets;
@@ -36,37 +37,64 @@ public class GenerateScript {
     }
 
     public static String generateScript() {
+        StringBuilder config = new StringBuilder("# Servers: ");
+        for (Server server : Server.servers) {
+            config.append(server.getName()).append(",");
+        }
+        config.append(" ServersEnd\n");
+
+        for (Server server : Server.servers) {
+            config.append("# ").append(server.getName()).append("-SpigotPlugins: ");
+            for (Plugin plugin : server.plugins) {
+                if (plugin instanceof SpigotPlugin) {
+                    config.append(plugin.getName()).append(":")
+                            .append(".").append(((SpigotPlugin) plugin).getId()).append("/").append(",");
+                }
+            }
+            config.append(" ").append(server.getName()).append("-SpigotPluginsEnd").append("\n");
+
+            config.append("# ").append(server.getName()).append("-DirectPlugins: ");
+            for (Plugin plugin : server.plugins) {
+                if (plugin instanceof DirectPlugin || plugin instanceof BukkitPlugin) {
+                    config.append(plugin.getName()).append(":").append(plugin.download()).append(",");
+                }
+            }
+            config.append(" ").append(server.getName()).append("-DirectPluginsEnd").append("\n");
+        }
+        config.append("\n");
+
         String[] pluginServers = new String[Server.servers.length];
 
         for (int i = 0; i < Server.servers.length; i++) {
-            String spigotIDs = "";
-            String directURLs = "";
+            StringBuilder spigotIDs = new StringBuilder();
+            StringBuilder directURLs = new StringBuilder();
 
             for (Plugin plugin : Server.servers[i].plugins) {
                 if (plugin instanceof SpigotPlugin) {
-                    if (spigotIDs.equals("")) {
-                        spigotIDs = ((SpigotPlugin) plugin).getId() + "";
+                    if (spigotIDs.toString().equals("")) {
+                        spigotIDs.append(((SpigotPlugin) plugin).getId());
                     } else {
-                        spigotIDs = "," + ((SpigotPlugin) plugin).getId();
+                        spigotIDs.append(",").append(((SpigotPlugin) plugin).getId());
                     }
                 } else if (plugin instanceof BukkitPlugin) {
-                    if (directURLs.equals("")) {
-                        directURLs = plugin.download();
+                    if (directURLs.toString().equals("")) {
+                        directURLs.append(plugin.download());
                     } else {
-                        directURLs = "," + plugin.download();
+                        directURLs.append(",").append(plugin.download());
                     }
                 }
             }
 
             pluginServers[i] = "docker run -d --rm"
                     + " $PWD/Plugpack/" + Server.servers[i].getName() + ":/data"
+                    + " -e TYPE=PAPER"
                     + " -e EULA=true"
                     + " -e SPIGET_RESOURCES=" + spigotIDs
                     + " -e MODS=" + directURLs
                     + " itzg/minecraft-server";
         }
 
-        StringBuilder output = new StringBuilder();
+        StringBuilder output = new StringBuilder(config.toString());
 
         for (String pluginServer : pluginServers) {
             output.append(pluginServer).append("\n");

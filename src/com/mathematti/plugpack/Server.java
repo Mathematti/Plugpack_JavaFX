@@ -21,6 +21,11 @@ public class Server {
         return serverName;
     }
 
+    public static void addServer(String name) {
+        servers = Arrays.copyOf(servers, servers.length + 1);
+        servers[servers.length - 1] = new Server(name);
+    }
+
     public void addPlugin(String name, String type, String link) {
         Plugin plugin = null;
         if (type.equalsIgnoreCase("spigot")) {
