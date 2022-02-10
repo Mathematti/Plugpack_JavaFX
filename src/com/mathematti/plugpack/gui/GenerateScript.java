@@ -85,13 +85,19 @@ public class GenerateScript {
                 }
             }
 
-            pluginServers[i] = "docker run -d --rm"
+            pluginServers[i] = "sudo docker run -d --rm"
                     + " -v $PWD/Plugpack/" + Server.servers[i].getName() + ":/data"
+                    + " --name plugpack_" + Server.servers[i].getName()
                     + " -e TYPE=PAPER"
                     + " -e EULA=true"
                     + " -e SPIGET_RESOURCES=" + spigotIDs
                     + " -e MODS=" + directURLs
-                    + " itzg/minecraft-server";
+                    + " itzg/minecraft-server\n";
+
+            pluginServers[i] += "while [ \"`sudo docker inspect -f {{.State.Health.Status}} plugpack_"
+                    + Server.servers[i].getName() + "`\" != \"healthy\" ]; do sleep 2; done\n";
+            pluginServers[i] += "sudo docker stop plugpack_" + Server.servers[i].getName() + "\n";
+            pluginServers[i] += "sudo mkdir -p ./Plugpack/plugins/" + Server.servers[i].getName() + "/";
         }
 
         StringBuilder output = new StringBuilder(config.toString());
@@ -103,9 +109,9 @@ public class GenerateScript {
         for (Server server : Server.servers) {
             for (Plugin plugin : server.plugins) {
                 if (plugin instanceof SpigotPlugin) {
-                    output.append("mv ./Plugpack/").append(server.getName()).append("/plugins/")
+                    output.append("sudo mv ./Plugpack/").append(server.getName()).append("/plugins/")
                             .append(((SpigotPlugin) plugin).getId()).append(".jar")
-                            .append(" ./Plugpack/plugins/").append(server.getName())
+                            .append(" ./Plugpack/plugins/").append(server.getName()).append("/")
                             .append(plugin.getName()).append(".jar\n");
                 }
             }
