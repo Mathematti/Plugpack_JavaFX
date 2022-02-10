@@ -90,6 +90,7 @@ public class GenerateScript {
                     + " --name plugpack_" + Server.servers[i].getName()
                     + " -e TYPE=PAPER"
                     + " -e EULA=true"
+                    + " -e REMOVE_OLD_MODS=TRUE"
                     + " -e SPIGET_RESOURCES=" + spigotIDs
                     + " -e MODS=" + directURLs
                     + " itzg/minecraft-server\n";
@@ -115,6 +116,13 @@ public class GenerateScript {
                             .append(plugin.getName()).append(".jar\n");
                 }
             }
+        }
+
+        output.append("sudo mkdir ./Plugpack/out/\n");
+
+        for (Server server : Server.servers) {
+            output.append("sudo zip ./Plugpack/out/").append(server.getName())
+                    .append(".zip ./Plugpack/plugins/").append(server.getName()).append("/*.jar");
         }
 
         return output.toString();
