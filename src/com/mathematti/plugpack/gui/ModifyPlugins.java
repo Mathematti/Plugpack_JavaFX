@@ -24,11 +24,9 @@ public class ModifyPlugins {
         vBox.setPadding(new Insets(padding));
         vBox.setSpacing(padding);
 
-        VBox hyperlinks = new VBox();
+        HBox hyperlinks = new HBox();
         hyperlinks.setPadding(new Insets(padding));
         hyperlinks.setSpacing(padding);
-
-        int width = 350;
 
         Label top = new Label("Which plugin do you want to modify?");
         Button cancel = new Button("Cancel");
@@ -47,17 +45,40 @@ public class ModifyPlugins {
             hyperlinkList.get(i).setOnAction(actionEvent -> modifyPluginGUI(stage, server, server.plugins[finalI]));
         }
 
+        final int columns = (int) Math.ceil(server.plugins.length / (float) 10);
+
+        List<VBox> containers = new ArrayList<>();
+
+        for (int i = 0; i < columns; i++) {
+            containers.add(new VBox());
+            containers.get(i).setPadding(new Insets(padding));
+            containers.get(i).setSpacing(padding);
+
+            for (int j = 0; j < Math.ceil(server.plugins.length / (float) columns); j++) {
+                try {
+                    containers.get(i).getChildren().addAll(hyperlinkList
+                            .get((int) (i * Math.ceil(server.plugins.length / (float) columns) + j)));
+                } catch (Exception ignored) {}
+            }
+        }
+
         HBox hBox = new HBox();
         hBox.setSpacing(padding);
 
         hBox.getChildren().addAll(cancel, addPlugin);
-        hyperlinks.getChildren().addAll(hyperlinkList);
+        hyperlinks.getChildren().addAll(containers);
         vBox.getChildren().addAll(top, hyperlinks, hBox);
 
-        double height = hyperlinkList.size() * 35 + 70;
+        double width = columns * 140;
+        if (width < 350) {
+            width = 350;
+        }
+
+        double height = Math.ceil(server.plugins.length / (float) columns) * 35 + 105;
         if (height < 200) {
             height = 200;
         }
+
         stage.setScene(new Scene(vBox, width, height));
     }
 
