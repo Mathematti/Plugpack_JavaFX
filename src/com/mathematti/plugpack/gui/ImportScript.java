@@ -1,6 +1,7 @@
 package com.mathematti.plugpack.gui;
 
 import com.mathematti.plugpack.Server;
+import com.mathematti.plugpack.plugin.SortByName;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,6 +10,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.util.Arrays;
 
 public class ImportScript {
     public static void importScriptGUI(Stage stage) {
@@ -80,6 +83,10 @@ public class ImportScript {
                                     plugin.substring(plugin.indexOf(":") + 1));
                 } catch (StringIndexOutOfBoundsException ignored) {}
             }
+        }
+
+        for (Server server : Server.servers) {
+            Arrays.sort(server.plugins, new SortByName());
         }
     }
 }

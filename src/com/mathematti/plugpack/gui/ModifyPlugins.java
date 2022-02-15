@@ -1,10 +1,7 @@
 package com.mathematti.plugpack.gui;
 
 import com.mathematti.plugpack.Server;
-import com.mathematti.plugpack.plugin.BukkitPlugin;
-import com.mathematti.plugpack.plugin.DirectPlugin;
-import com.mathematti.plugpack.plugin.Plugin;
-import com.mathematti.plugpack.plugin.SpigotPlugin;
+import com.mathematti.plugpack.plugin.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -118,6 +116,7 @@ public class ModifyPlugins {
                 downloadLink.set(input.getText());
                 input.clear();
                 server.addPlugin(pluginName.get(), pluginType.get(), downloadLink.get());
+                Arrays.sort(server.plugins, new SortByName());
                 choosePluginGUI(stage, server);
             }
             question.getAndIncrement();
@@ -171,6 +170,7 @@ public class ModifyPlugins {
                     }
                 }
             }
+            Arrays.sort(server.plugins, new SortByName());
             choosePluginGUI(stage, server);
         });
 
