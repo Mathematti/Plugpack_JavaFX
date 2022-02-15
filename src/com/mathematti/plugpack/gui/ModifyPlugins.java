@@ -8,9 +8,9 @@ import com.mathematti.plugpack.plugin.SpigotPlugin;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -29,13 +29,11 @@ public class ModifyPlugins {
         vBox.setPadding(new Insets(padding));
         vBox.setSpacing(padding);
 
-        FlowPane flowPane = new FlowPane();
-        flowPane.setVgap(padding);
-        flowPane.setHgap(padding);
+        VBox hyperlinks = new VBox();
+        hyperlinks.setPadding(new Insets(padding));
+        hyperlinks.setSpacing(padding);
 
         int width = 350;
-        final int height = 200;
-        stage.setScene(new Scene(vBox, width, height));
 
         Label top = new Label("Which plugin do you want to modify?");
         Button cancel = new Button("Cancel");
@@ -43,23 +41,29 @@ public class ModifyPlugins {
         Button addPlugin = new Button("Add plugin");
         addPlugin.setOnAction(actionEvent -> addPluginGUI(stage, server));
 
-        List<Button> buttonList = new ArrayList<>();
+        List<Hyperlink> hyperlinkList = new ArrayList<>();
 
         for (Plugin plugin : server.plugins) {
-            buttonList.add(new Button(plugin.getName()));
+            hyperlinkList.add(new Hyperlink(plugin.getName()));
         }
 
-        for (int i = 0; i < buttonList.size(); i++) {
+        for (int i = 0; i < hyperlinkList.size(); i++) {
             int finalI = i;
-            buttonList.get(i).setOnAction(actionEvent -> modifyPluginGUI(stage, server, server.plugins[finalI]));
+            hyperlinkList.get(i).setOnAction(actionEvent -> modifyPluginGUI(stage, server, server.plugins[finalI]));
         }
 
         HBox hBox = new HBox();
         hBox.setSpacing(padding);
 
         hBox.getChildren().addAll(cancel, addPlugin);
-        flowPane.getChildren().addAll(buttonList);
-        vBox.getChildren().addAll(top, flowPane, hBox);
+        hyperlinks.getChildren().addAll(hyperlinkList);
+        vBox.getChildren().addAll(top, hyperlinks, hBox);
+
+        double height = hyperlinkList.size() * 35 + 70;
+        if (height < 200) {
+            height = 200;
+        }
+        stage.setScene(new Scene(vBox, width, height));
     }
 
     public static void addPluginGUI(Stage stage, Server server) {
