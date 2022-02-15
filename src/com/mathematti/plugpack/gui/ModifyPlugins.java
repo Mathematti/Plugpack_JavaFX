@@ -7,10 +7,7 @@ import com.mathematti.plugpack.plugin.Plugin;
 import com.mathematti.plugpack.plugin.SpigotPlugin;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -78,6 +75,16 @@ public class ModifyPlugins {
         final int height = 200;
         stage.setScene(new Scene(vBox, width, height));
 
+        final ToggleGroup group = new ToggleGroup();
+        RadioButton spigot = new RadioButton("Spigot");
+        spigot.setToggleGroup(group);
+        RadioButton bukkit = new RadioButton("Bukkit");
+        bukkit.setToggleGroup(group);
+        RadioButton direct = new RadioButton("Direct");
+        direct.setToggleGroup(group);
+        RadioButton custom = new RadioButton("Custom");
+        custom.setToggleGroup(group);
+
         AtomicReference<String> pluginName = new AtomicReference<>("");
         AtomicReference<String> pluginType = new AtomicReference<>("");
         AtomicReference<String> downloadLink = new AtomicReference<>("");
@@ -88,12 +95,24 @@ public class ModifyPlugins {
         Button confirm = new Button("Confirm");
         confirm.setOnAction(actionEvent -> {
             if (question.get() == 1) {
-                inputLabel.setText("Input plugin type (spigot, bukkit, direct, custom):");
+                inputLabel.setText("Input plugin type:");
+                vBox.getChildren().clear();
+                vBox.getChildren().addAll(inputLabel, spigot, bukkit, direct, custom, confirm);
                 pluginName.set(input.getText());
                 input.clear();
             } else if (question.get() == 2) {
                 inputLabel.setText("Input plugin download link:");
-                pluginType.set(input.getText());
+                vBox.getChildren().clear();
+                vBox.getChildren().addAll(inputLabel, input, confirm);
+                if (spigot.isSelected()) {
+                    pluginType.set("spigot");
+                } else if (bukkit.isSelected()) {
+                    pluginType.set("bukkit");
+                } else if (direct.isSelected()) {
+                    pluginType.set("direct");
+                } else if (custom.isSelected()) {
+                    pluginType.set("custom");
+                }
                 input.clear();
             } else if (question.get() == 3) {
                 downloadLink.set(input.getText());
