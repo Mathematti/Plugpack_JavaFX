@@ -55,7 +55,7 @@ public class GenerateScript {
 
             config.append("# ").append(server.getName()).append("-DirectPlugins: ");
             for (Plugin plugin : server.plugins) {
-                if (plugin instanceof DirectPlugin || plugin instanceof BukkitPlugin) {
+                if (plugin instanceof DirectPlugin) {
                     config.append(plugin.getName()).append(":").append(plugin.download()).append(",");
                 }
             }
@@ -76,7 +76,7 @@ public class GenerateScript {
                     } else {
                         spigotIDs.append(",").append(((SpigotPlugin) plugin).getId());
                     }
-                } else if (plugin instanceof BukkitPlugin) {
+                } else if (plugin instanceof DirectPlugin) {
                     if (directURLs.toString().equals("")) {
                         directURLs.append(plugin.download());
                     } else {
@@ -116,6 +116,8 @@ public class GenerateScript {
                             .append(plugin.getName()).append(".jar\n");
                 }
             }
+            output.append("sudo mv ./Plugpack/").append(server.getName())
+                    .append("/plugins/*.jar ./Plugpack/plugins/").append(server.getName()).append("/\n");
         }
 
         output.append("sudo mkdir ./Plugpack/out/\n");

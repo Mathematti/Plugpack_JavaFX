@@ -1,22 +1,17 @@
 package com.mathematti.plugpack.plugin;
 
-public class BukkitPlugin extends Plugin {
-    String downloadLink;
-
+public class BukkitPlugin extends DirectPlugin {
     public BukkitPlugin(String name, String type, String link) {
-        super(name, type);
-
-        if (link.contains("files/latest")) {
-            downloadLink = link;
-        } else if (link.endsWith("/")) {
-            downloadLink = link + "files/latest";
-        } else {
-            downloadLink = link + "/files/latest";
-        }
+        super(name, type, getLink(link));
     }
 
-    @Override
-    public String download() {
-        return downloadLink;
+    private static String getLink(String link) {
+        if (link.contains("files/latest")) {
+            return link;
+        } else if (link.endsWith("/")) {
+            return link + "files/latest";
+        } else {
+            return link + "/files/latest";
+        }
     }
 }
