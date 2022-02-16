@@ -114,13 +114,13 @@ public class GenerateScript {
         }
 
         for (Server server : Server.servers) {
-            output.append("sudo cd ./Plugpack/").append(server.getName()).append("/plugins/\n");
+            output.append("cd ./Plugpack/").append(server.getName()).append("/plugins/\n");
             for (Plugin plugin : server.plugins) {
                 if (plugin instanceof CustomPlugin) {
                     output.append(plugin.download()).append("\n");
                 }
             }
-            output.append("sudo cd ../../../\n");
+            output.append("cd ../../../\n");
         }
 
         for (Server server : Server.servers) {
