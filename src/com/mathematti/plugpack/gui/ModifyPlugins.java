@@ -166,8 +166,6 @@ public class ModifyPlugins {
         hBox.setSpacing(padding);
 
         int width = 350;
-        final int height = 300;
-        stage.setScene(new Scene(vBox, width, height));
 
         Label top = new Label("Modify " + plugin.getName() + ":");
         Label pluginName = new Label("Plugin name:");
@@ -176,6 +174,7 @@ public class ModifyPlugins {
         TextField pluginTypeInput = new TextField(plugin.getType());
         Label pluginLink = new Label("Download link:");
         TextField pluginLinkInput = new TextField(plugin.download());
+        TextArea pluginCommandInput = new TextArea(plugin.download());
 
         Button cancel = new Button("Cancel");
         cancel.setOnAction(actionEvent -> choosePluginGUI(stage, server));
@@ -195,7 +194,7 @@ public class ModifyPlugins {
                                 pluginNameInput.getText(), pluginTypeInput.getText(), pluginLinkInput.getText());
                     } else if (pluginTypeInput.getText().equalsIgnoreCase("custom")) {
                         server.plugins[i] = new DirectPlugin(
-                                pluginNameInput.getText(), pluginTypeInput.getText(), pluginLinkInput.getText());
+                                pluginNameInput.getText(), pluginTypeInput.getText(), pluginCommandInput.getText());
                     }
                 }
             }
@@ -220,7 +219,14 @@ public class ModifyPlugins {
 
         hBox.getChildren().addAll(cancel, save, delete);
 
-        vBox.getChildren().addAll(top, pluginName, pluginNameInput, pluginType, pluginTypeInput,
-                pluginLink, pluginLinkInput, hBox);
+        if (plugin.getType().equals("custom")) {
+            stage.setScene(new Scene(vBox, width, 400));
+            vBox.getChildren().addAll(top, pluginName, pluginNameInput, pluginType, pluginTypeInput,
+                    pluginLink, pluginCommandInput, hBox);
+        } else {
+            stage.setScene(new Scene(vBox, width, 300));
+            vBox.getChildren().addAll(top, pluginName, pluginNameInput, pluginType, pluginTypeInput,
+                    pluginLink, pluginLinkInput, hBox);
+        }
     }
 }
