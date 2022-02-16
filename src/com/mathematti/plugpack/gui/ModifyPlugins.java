@@ -112,6 +112,7 @@ public class ModifyPlugins {
         Label inputLabel = new Label("Input plugin name:");
         TextField input = new TextField();
         Button confirm = new Button("Confirm");
+        TextArea inputArea = new TextArea();
         confirm.setOnAction(actionEvent -> {
             if (question.get() == 1) {
                 inputLabel.setText("Input plugin type:");
@@ -131,10 +132,17 @@ public class ModifyPlugins {
                     pluginType.set("direct");
                 } else if (custom.isSelected()) {
                     pluginType.set("custom");
+                    vBox.getChildren().clear();
+                    vBox.getChildren().addAll(inputLabel, inputArea, confirm);
+                    inputLabel.setText("Input plugin download command(s):");
                 }
                 input.clear();
             } else if (question.get() == 3) {
-                downloadLink.set(input.getText());
+                if (pluginType.get().equalsIgnoreCase("custom")) {
+                    downloadLink.set(inputArea.getText());
+                } else {
+                    downloadLink.set(input.getText());
+                }
                 input.clear();
                 server.addPlugin(pluginName.get(), pluginType.get(), downloadLink.get());
                 Arrays.sort(server.plugins, new SortByName());

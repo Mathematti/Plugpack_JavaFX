@@ -1,10 +1,7 @@
 package com.mathematti.plugpack.gui;
 
 import com.mathematti.plugpack.Server;
-import com.mathematti.plugpack.plugin.BukkitPlugin;
-import com.mathematti.plugpack.plugin.DirectPlugin;
-import com.mathematti.plugpack.plugin.Plugin;
-import com.mathematti.plugpack.plugin.SpigotPlugin;
+import com.mathematti.plugpack.plugin.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -60,6 +57,15 @@ public class GenerateScript {
                 }
             }
             config.append(" ").append(server.getName()).append("-DirectPluginsEnd").append("\n");
+
+            config.append("# ").append(server.getName()).append("-CustomPlugins: ");
+            for (Plugin plugin : server.plugins) {
+                if (plugin instanceof CustomPlugin) {
+                    config.append(plugin.getName()).append(":")
+                            .append(plugin.download().replaceAll("\n", "@plclb@")).append("@plcs@");
+                }
+            }
+            config.append(" ").append(server.getName()).append("-CustomPluginsEnd").append("\n");
         }
         config.append("\n");
 
@@ -105,6 +111,16 @@ public class GenerateScript {
 
         for (String pluginServer : pluginServers) {
             output.append(pluginServer).append("\n");
+        }
+
+        for (Server server : Server.servers) {
+            output.append("sudo cd ./Plugpack/").append(server.getName()).append("/plugins/\n");
+            for (Plugin plugin : server.plugins) {
+                if (plugin instanceof CustomPlugin) {
+                    output.append(plugin.download()).append("\n");
+                }
+            }
+            output.append("sudo cd ../../../\n");
         }
 
         for (Server server : Server.servers) {

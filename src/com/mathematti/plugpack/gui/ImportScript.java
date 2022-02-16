@@ -83,6 +83,23 @@ public class ImportScript {
                                     plugin.substring(plugin.indexOf(":") + 1));
                 } catch (StringIndexOutOfBoundsException ignored) {}
             }
+
+            String customPluginString =
+                    script.substring(
+                            (script.indexOf("# " + server + "-CustomPlugins: ")
+                                    + ("# " + server + "-CustomPlugins: ").length()),
+                            script.indexOf(" " + server + "-CustomPluginsEnd")
+                    );
+            String[] customPlugins = customPluginString.split("@plcs@");
+            for (String plugin : customPlugins) {
+                try {
+                    Server.servers[Server.servers.length - 1].
+                            addPlugin(plugin.substring(0, plugin.indexOf(":")),
+                                    "custom",
+                                    plugin.substring(plugin.indexOf(":") + 1)
+                                            .replaceAll("@plclb@", "\n"));
+                } catch (StringIndexOutOfBoundsException ignored) {}
+            }
         }
 
         for (Server server : Server.servers) {

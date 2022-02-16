@@ -1,9 +1,6 @@
 package com.mathematti.plugpack;
 
-import com.mathematti.plugpack.plugin.BukkitPlugin;
-import com.mathematti.plugpack.plugin.DirectPlugin;
-import com.mathematti.plugpack.plugin.Plugin;
-import com.mathematti.plugpack.plugin.SpigotPlugin;
+import com.mathematti.plugpack.plugin.*;
 
 import java.util.Arrays;
 
@@ -35,7 +32,7 @@ public class Server {
         } else if (type.equalsIgnoreCase("direct")) {
             plugin = new DirectPlugin(name, type, link);
         } else if (type.equalsIgnoreCase("custom")) {
-            plugin = new DirectPlugin(name, type, link);
+            plugin = new CustomPlugin(name, type, link);
         }
 
         plugins = Arrays.copyOf(plugins, plugins.length + 1);
