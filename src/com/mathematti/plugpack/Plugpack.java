@@ -1,6 +1,6 @@
 package com.mathematti.plugpack;
 
-import com.mathematti.plugpack.gui.MainMenu;
+import com.mathematti.plugpack.gui.MainMenuGUI;
 import javafx.application.Application;
 
 /**
@@ -13,6 +13,6 @@ public class Plugpack {
      * @param args args
      */
     public static void main(String[] args) {
-        Application.launch(MainMenu.class, args);
+        Application.launch(MainMenuGUI.class, args);
     }
 }

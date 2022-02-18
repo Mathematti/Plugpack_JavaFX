@@ -1,48 +1,11 @@
-package com.mathematti.plugpack.gui;
+package com.mathematti.plugpack.functions;
 
-import com.mathematti.plugpack.Server;
-import com.mathematti.plugpack.plugin.SortByName;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import com.mathematti.plugpack.functions.plugin.SortByName;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.util.Arrays;
 
 public class ImportScript {
-    public static void importScriptGUI(Stage stage) {
-        stage.setTitle("Plugpack - Import script");
-
-        final int padding = 10;
-        VBox vBox = new VBox();
-        vBox.setPadding(new Insets(padding));
-        vBox.setSpacing(padding);
-
-        final int width = 350;
-        final int height = 200;
-        stage.setScene(new Scene(vBox, width, height));
-
-        Label output = new Label("Paste your script here:");
-        TextArea script = new TextArea();
-        Button cancel = new Button("Cancel");
-        cancel.setOnAction(actionEvent -> MainMenu.showMainGUI(stage));
-        Button importScript = new Button("Import");
-        importScript.setOnAction(actionEvent -> {
-            importScript(script);
-            MainMenu.showMainGUI(stage);
-        });
-
-        HBox hBox = new HBox();
-        hBox.setSpacing(padding);
-
-        hBox.getChildren().addAll(cancel, importScript);
-        vBox.getChildren().addAll(output, script, hBox);
-    }
-
     public static void importScript(TextArea scriptInput) {
         String script = scriptInput.getText();
         String serversString =
@@ -65,7 +28,8 @@ public class ImportScript {
                     Server.servers[Server.servers.length - 1].
                             addPlugin(plugin.substring(0, plugin.indexOf(":")), "spigot",
                                     plugin.substring(plugin.indexOf(":") + 1));
-                } catch (StringIndexOutOfBoundsException ignored) {}
+                } catch (StringIndexOutOfBoundsException ignored) {
+                }
 
             }
 
@@ -81,7 +45,8 @@ public class ImportScript {
                     Server.servers[Server.servers.length - 1].
                             addPlugin(plugin.substring(0, plugin.indexOf(":")), "direct",
                                     plugin.substring(plugin.indexOf(":") + 1));
-                } catch (StringIndexOutOfBoundsException ignored) {}
+                } catch (StringIndexOutOfBoundsException ignored) {
+                }
             }
 
             String customPluginString =
@@ -98,7 +63,8 @@ public class ImportScript {
                                     "custom",
                                     plugin.substring(plugin.indexOf(":") + 1)
                                             .replaceAll("@plclb@", "\n"));
-                } catch (StringIndexOutOfBoundsException ignored) {}
+                } catch (StringIndexOutOfBoundsException ignored) {
+                }
             }
         }
 

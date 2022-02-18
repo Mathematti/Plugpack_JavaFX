@@ -1,6 +1,9 @@
-package com.mathematti.plugpack;
+package com.mathematti.plugpack.functions;
 
-import com.mathematti.plugpack.plugin.*;
+import com.mathematti.plugpack.functions.plugin.*;
+import com.mathematti.plugpack.gui.AddServerGUI;
+import com.mathematti.plugpack.gui.ModifyServerGUI;
+import javafx.stage.Stage;
 
 import java.util.Arrays;
 
@@ -37,5 +40,23 @@ public class Server {
 
         plugins = Arrays.copyOf(plugins, plugins.length + 1);
         plugins[plugins.length - 1] = plugin;
+    }
+
+    public static void checkServer(Stage stage, String name) {
+        boolean error = false;
+        if (name.equals("")) {
+            AddServerGUI.addServerGUI(stage, "empty");
+            error = true;
+        }
+        for (Server server : servers) {
+            if (server.getName().equals(name)) {
+                AddServerGUI.addServerGUI(stage, "exists");
+                error = true;
+            }
+        }
+        if (!error) {
+            addServer(name);
+            ModifyServerGUI.modifyServerGUI(stage, name);
+        }
     }
 }

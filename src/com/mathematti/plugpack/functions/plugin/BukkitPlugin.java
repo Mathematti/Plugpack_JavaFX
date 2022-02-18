@@ -1,4 +1,4 @@
-package com.mathematti.plugpack.plugin;
+package com.mathematti.plugpack.functions.plugin;
 
 public class BukkitPlugin extends DirectPlugin {
     public BukkitPlugin(String name, String type, String link) {

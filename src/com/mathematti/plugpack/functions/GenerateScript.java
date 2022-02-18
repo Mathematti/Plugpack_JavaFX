@@ -1,38 +1,11 @@
-package com.mathematti.plugpack.gui;
+package com.mathematti.plugpack.functions;
 
-import com.mathematti.plugpack.Server;
-import com.mathematti.plugpack.plugin.*;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import com.mathematti.plugpack.functions.plugin.CustomPlugin;
+import com.mathematti.plugpack.functions.plugin.DirectPlugin;
+import com.mathematti.plugpack.functions.plugin.Plugin;
+import com.mathematti.plugpack.functions.plugin.SpigotPlugin;
 
 public class GenerateScript {
-    public static void generateScriptGUI(Stage stage) {
-        stage.setTitle("Plugpack - Generate script");
-
-        final int padding = 10;
-        VBox vBox = new VBox();
-        vBox.setPadding(new Insets(padding));
-        vBox.setSpacing(padding);
-
-        final int width = 350;
-        final int height = 200;
-        stage.setScene(new Scene(vBox, width, height));
-
-        Label output = new Label("Here's your script:");
-        TextArea script = new TextArea();
-        Button cancel = new Button("Cancel");
-        cancel.setOnAction(actionEvent -> MainMenu.showMainGUI(stage));
-
-        vBox.getChildren().addAll(output, script, cancel);
-
-        script.setText(generateScript());
-    }
-
     public static String generateScript() {
         StringBuilder config = new StringBuilder("# Servers: ");
         for (Server server : Server.servers) {

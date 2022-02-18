@@ -1,6 +1,6 @@
 package com.mathematti.plugpack.gui;
 
-import com.mathematti.plugpack.Server;
+import com.mathematti.plugpack.functions.Server;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -16,7 +16,7 @@ import javafx.stage.Stage;
  * Main menu of the Plugpack application
  * @author Mathematti
  */
-public class MainMenu extends Application {
+public class MainMenuGUI extends Application {
     @Override
     public void start(Stage stage) {
         final int width = 350;
@@ -46,11 +46,11 @@ public class MainMenu extends Application {
         main.setTextFill(Color.BLUE);
         Label servers = new Label("You currently have " + Server.servers.length + " servers set up.");
         Button modify = new Button("Modify servers");
-        modify.setOnAction(actionEvent -> ModifyServer.chooseServerGUI(stage));
+        modify.setOnAction(actionEvent -> ChooseServerGUI.chooseServerGUI(stage));
         Button generateScript = new Button("Generate script");
-        generateScript.setOnAction(actionEvent -> GenerateScript.generateScriptGUI(stage));
+        generateScript.setOnAction(actionEvent -> GenerateScriptGUI.generateScriptGUI(stage));
         Button importScript = new Button("Import script");
-        importScript.setOnAction(actionEvent -> ImportScript.importScriptGUI(stage));
+        importScript.setOnAction(actionEvent -> ImportScriptGUI.importScriptGUI(stage));
 
         hBox.getChildren().addAll(generateScript, importScript);
 

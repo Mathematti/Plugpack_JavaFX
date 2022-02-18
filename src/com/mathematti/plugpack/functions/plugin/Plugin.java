@@ -1,4 +1,4 @@
-package com.mathematti.plugpack.plugin;
+package com.mathematti.plugpack.functions.plugin;
 
 public abstract class Plugin {
     final private String name;

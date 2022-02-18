@@ -1,4 +1,4 @@
-package com.mathematti.plugpack.plugin;
+package com.mathematti.plugpack.functions.plugin;
 
 public class SpigotPlugin extends Plugin {
     final private int id;

@@ -1,4 +1,4 @@
-package com.mathematti.plugpack.plugin;
+package com.mathematti.plugpack.functions.plugin;
 
 public class GithubPlugin extends Plugin {
     public GithubPlugin(String name, String type) {
