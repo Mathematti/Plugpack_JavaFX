@@ -102,7 +102,7 @@ public class GenerateScript {
                     output.append("sudo mv ./Plugpack/").append(server.getName()).append("/plugins/")
                             .append(((SpigotPlugin) plugin).getId()).append(".jar")
                             .append(" ./Plugpack/plugins/").append(server.getName()).append("/")
-                            .append(plugin.getName()).append(".jar\n");
+                            .append(plugin.getName().replaceAll(" ", "")).append(".jar\n");
                 }
             }
             output.append("sudo mv ./Plugpack/").append(server.getName())
