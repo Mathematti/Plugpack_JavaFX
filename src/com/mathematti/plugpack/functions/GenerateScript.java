@@ -100,10 +100,13 @@ public class GenerateScript {
         for (Server server : Server.servers) {
             for (Plugin plugin : server.plugins) {
                 if (plugin instanceof SpigotPlugin) {
-                    output.append("sudo mv ./Plugpack/").append(server.getName()).append("/plugins/")
+                    output.append("if [ -f ./Plugpack/").append(server.getName()).append("/plugins/")
+                            .append(((SpigotPlugin) plugin).getId()).append(".jar").append(" ]; then\n");
+                    output.append("    sudo mv ./Plugpack/").append(server.getName()).append("/plugins/")
                             .append(((SpigotPlugin) plugin).getId()).append(".jar")
                             .append(" ./Plugpack/plugins/").append(server.getName()).append("/")
                             .append(plugin.getName().replaceAll(" ", "")).append(".jar\n");
+                    output.append("fi\n");
                 }
             }
             output.append("sudo mv ./Plugpack/").append(server.getName())
