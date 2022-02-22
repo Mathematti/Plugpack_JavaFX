@@ -65,6 +65,7 @@ public class GenerateScript {
             }
 
             pluginServers[i] = "sudo docker run -d --rm"
+                    + " --dns 8.8.8.8"
                     + " -v $PWD/Plugpack/" + Server.servers[i].getName() + ":/data"
                     + " --name plugpack_" + Server.servers[i].getName()
                     + " -e TYPE=PAPER"
