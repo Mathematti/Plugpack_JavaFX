@@ -72,8 +72,8 @@ public class GenerateScript {
                     + " -e EULA=true"
                     + " -e REMOVE_OLD_MODS=TRUE"
                     + " -e SPIGET_RESOURCES=" + spigotIDs
-                    + " -e MODS=" + directURLs
-                    + " itzg/minecraft-server\n";
+                    + " -e MODS=\"" + directURLs
+                    + "\" itzg/minecraft-server\n";
 
             pluginServers[i] += "while [ \"`sudo docker inspect -f {{.State.Health.Status}} plugpack_"
                     + Server.servers[i].getName() + "`\" != \"healthy\" ]; do sleep 2; done\n";
@@ -119,7 +119,7 @@ public class GenerateScript {
             output.append("cd ./Plugpack/plugins/").append(server.getName()).append("/\n");
             output.append("sudo zip ../../out/").append(server.getName())
                     .append(".zip ./*.jar\n");
-            output.append("cd ../../../");
+            output.append("cd ../../../\n");
         }
 
         return output.toString();
