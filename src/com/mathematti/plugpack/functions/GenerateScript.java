@@ -41,6 +41,8 @@ public class GenerateScript {
             config.append(" ").append(server.getName()).append("-CustomPluginsEnd").append("\n");
         }
         config.append("\n");
+        config.append("sudo rm -f -r /var/lib/Plugpack/*\n");
+        config.append("\n");
 
         String[] pluginServers = new String[Server.servers.length];
 
@@ -66,7 +68,7 @@ public class GenerateScript {
 
             pluginServers[i] = "sudo docker run -d --rm"
                     + " --dns 8.8.8.8"
-                    + " -v $PWD/Plugpack/" + Server.servers[i].getName() + ":/data"
+                    + " -v /var/lib/Plugpack/" + Server.servers[i].getName() + ":/data"
                     + " --name plugpack_" + Server.servers[i].getName()
                     + " -e TYPE=PAPER"
                     + " -e EULA=true"
@@ -78,7 +80,7 @@ public class GenerateScript {
             pluginServers[i] += "while [ \"`sudo docker inspect -f {{.State.Health.Status}} plugpack_"
                     + Server.servers[i].getName() + "`\" != \"healthy\" ]; do sleep 2; done\n";
             pluginServers[i] += "sudo docker stop plugpack_" + Server.servers[i].getName() + "\n";
-            pluginServers[i] += "sudo mkdir -p ./Plugpack/plugins/" + Server.servers[i].getName() + "/";
+            pluginServers[i] += "sudo mkdir -p /var/lib/Plugpack/plugins/" + Server.servers[i].getName() + "/";
         }
 
         StringBuilder output = new StringBuilder(config.toString());
@@ -88,7 +90,7 @@ public class GenerateScript {
         }
 
         for (Server server : Server.servers) {
-            output.append("cd ./Plugpack/").append(server.getName()).append("/plugins/\n");
+            output.append("cd /var/lib/Plugpack/").append(server.getName()).append("/plugins/\n");
             for (Plugin plugin : server.plugins) {
                 if (plugin instanceof CustomPlugin) {
                     output.append(plugin.download()).append("\n");
@@ -100,23 +102,23 @@ public class GenerateScript {
         for (Server server : Server.servers) {
             for (Plugin plugin : server.plugins) {
                 if (plugin instanceof SpigotPlugin) {
-                    output.append("if [ -f ./Plugpack/").append(server.getName()).append("/plugins/")
+                    output.append("if [ -f /var/lib/Plugpack/").append(server.getName()).append("/plugins/")
                             .append(((SpigotPlugin) plugin).getId()).append(".jar").append(" ]; then\n");
-                    output.append("    sudo mv ./Plugpack/").append(server.getName()).append("/plugins/")
+                    output.append("    sudo mv /var/lib/Plugpack/").append(server.getName()).append("/plugins/")
                             .append(((SpigotPlugin) plugin).getId()).append(".jar")
-                            .append(" ./Plugpack/plugins/").append(server.getName()).append("/")
+                            .append(" /var/lib/Plugpack/plugins/").append(server.getName()).append("/")
                             .append(plugin.getName().replaceAll(" ", "")).append(".jar\n");
                     output.append("fi\n");
                 }
             }
-            output.append("sudo mv ./Plugpack/").append(server.getName())
-                    .append("/plugins/*.jar ./Plugpack/plugins/").append(server.getName()).append("/\n");
+            output.append("sudo mv /var/lib/Plugpack/").append(server.getName())
+                    .append("/plugins/*.jar /var/lib/Plugpack/plugins/").append(server.getName()).append("/\n");
         }
 
-        output.append("sudo mkdir ./Plugpack/out/\n");
+        output.append("sudo mkdir /var/lib/Plugpack/out/\n");
 
         for (Server server : Server.servers) {
-            output.append("cd ./Plugpack/plugins/").append(server.getName()).append("/\n");
+            output.append("cd /var/lib/Plugpack/plugins/").append(server.getName()).append("/\n");
             output.append("sudo zip ../../out/").append(server.getName())
                     .append(".zip ./*.jar\n");
             output.append("cd ../../../\n");
