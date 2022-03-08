@@ -48,7 +48,6 @@ public class GenerateScript {
 
         for (int i = 0; i < Server.servers.length; i++) {
             StringBuilder spigotIDs = new StringBuilder();
-            StringBuilder directURLs = new StringBuilder();
 
             for (Plugin plugin : Server.servers[i].plugins) {
                 if (plugin instanceof SpigotPlugin) {
@@ -56,12 +55,6 @@ public class GenerateScript {
                         spigotIDs.append(((SpigotPlugin) plugin).getId());
                     } else {
                         spigotIDs.append(",").append(((SpigotPlugin) plugin).getId());
-                    }
-                } else if (plugin instanceof DirectPlugin) {
-                    if (directURLs.toString().equals("")) {
-                        directURLs.append(plugin.download());
-                    } else {
-                        directURLs.append(",").append(plugin.download());
                     }
                 }
             }
@@ -74,7 +67,6 @@ public class GenerateScript {
                     + " -e EULA=true"
                     + " -e REMOVE_OLD_MODS=TRUE"
                     + " -e SPIGET_RESOURCES=" + spigotIDs
-                    + " -e MODS=\"" + directURLs
                     + "\" itzg/minecraft-server\n";
 
             pluginServers[i] += "while [ \"`sudo docker inspect -f {{.State.Health.Status}} plugpack_"
@@ -91,6 +83,20 @@ public class GenerateScript {
 
         for (Server server : Server.servers) {
             output.append("cd /var/lib/Plugpack/").append(server.getName()).append("/plugins/\n");
+            for (Plugin plugin : server.plugins) {
+                if (plugin instanceof DirectPlugin) {
+                    String pluginLink = plugin.download();
+
+                    output.append("sudo wget ").append(pluginLink).append("\n");
+
+                    if (pluginLink.endsWith("/")) {
+                        pluginLink = pluginLink.substring(0, pluginLink.length() - 1);
+                    }
+                    output.append("sudo mv ./").append(pluginLink.substring(pluginLink.lastIndexOf("/") + 1))
+                            .append(" ./").append(plugin.getName()).append(".jar\n");
+                }
+            }
+
             for (Plugin plugin : server.plugins) {
                 if (plugin instanceof CustomPlugin) {
                     output.append(plugin.download()).append("\n");
