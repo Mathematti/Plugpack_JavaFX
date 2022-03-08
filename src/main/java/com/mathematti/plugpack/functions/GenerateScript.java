@@ -48,8 +48,8 @@ public class GenerateScript {
 
 
         for (Server server : Server.servers) {
-            output.append("sudo mkdir -p /var/lib/Plugpack/").append(server.getName()).append("/plugins/\n");
-            output.append("cd /var/lib/Plugpack/").append(server.getName()).append("/plugins/\n");
+            output.append("sudo mkdir -p /var/lib/Plugpack/plugins/").append(server.getName()).append("/\n");
+            output.append("cd /var/lib/Plugpack/plugins/").append(server.getName()).append("/\n");
             for (Plugin plugin : server.plugins) {
                 if (plugin instanceof DirectPlugin) {
                     String pluginLink = plugin.download();
@@ -60,7 +60,8 @@ public class GenerateScript {
                         pluginLink = pluginLink.substring(0, pluginLink.length() - 1);
                     }
                     output.append("sudo mv ./").append(pluginLink.substring(pluginLink.lastIndexOf("/") + 1))
-                            .append(" ./").append(plugin.getName()).append(".jar\n");
+                            .append(" ./").append(plugin.getName().replaceAll(" ", ""))
+                            .append(".jar\n");
                 } else if (plugin instanceof CustomPlugin) {
                     output.append(plugin.download()).append("\n");
                 } else if (plugin instanceof SpigotPlugin) {
