@@ -29,12 +29,13 @@ application {
     mainClass = 'com.mathematti.plugpack.Plugpack'
 }
 
-javafx {
-    version = '17.0.1'
-    modules = ['javafx.controls', 'javafx.fxml']
-}
-
 dependencies {
+    String javaFxVersion = '17'
+
+    implementation group: 'org.openjfx', name: 'javafx-base', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-controls', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-fxml', version: javaFxVersion, classifier: 'win'
+    implementation group: 'org.openjfx', name: 'javafx-graphics', version: javaFxVersion, classifier: 'win'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
