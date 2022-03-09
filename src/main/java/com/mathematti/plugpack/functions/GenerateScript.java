@@ -82,7 +82,7 @@ public class GenerateScript {
         for (Server server : Server.servers) {
             output.append("cd /var/lib/Plugpack/plugins/").append(server.getName()).append("/\n");
             output.append("sudo zip ../../out/").append(server.getName())
-                    .append(".zip ./*.jar\n");
+                    .append(".zip ./*\n");
             output.append("cd ../../../\n");
         }
 
