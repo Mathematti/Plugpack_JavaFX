@@ -1,3 +1,10 @@
+# This application has been replaced by [Plugpack Flutter](https://github.com/Mathematti/Plugpack) and will not receive any more updates
+## Why re-write everything?
+Flutter gives me the ability to use Plugpack on multible platforms, which I've always wanted to run it on the web. Additionally, designing somewhat pleasing user interfaces is also easier.
+
+
+
+# Original description
 ### *This application is still WIP and will be improved, but it's already fully usable*
 
 # Plugpack
